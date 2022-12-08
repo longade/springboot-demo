@@ -1,25 +1,36 @@
 pipeline {
     agent any
     tools {
-        maven 'MAVEN_HOME'
-        jdk 'JAVA_HOME'
+        maven 'maven-3.6.3'
+        jdk 'jdk-11'
     }
     stages {
-      stage("Clone the project") {
-        git branch: 'master', url: 'https://github.com/longade/springboot-demo.git'
-      }
-
-      stage("Compilation") {
-        sh "mvn clean install -DskipTests"
-      }
-
-      stage("Tests and Deployment") {
-        stage("Running unit tests") {
-          sh "mvn test -Punit"
+        stage('Clone') {
+            steps {
+                // Get some code from a GitHub repository
+                git branch: 'master', url: 'https://github.com/longade/springboot-demo.git'
+            }
         }
-        stage("Deployment") {
-          sh 'nohup mvn spring-boot:run -Dserver.port=9090 &'
+        stage('Build') {
+            steps {
+                // Build the project using maven
+                sh "mvn clean install -DskipTests"
+            }
         }
-      }
-  }
+        stage('Running unit tests') {
+            steps {
+                sh "mvn test -Punit"
+            }
+        }
+        stage('Deploy on container') {
+            steps {
+                sh 'docker build -t longade/springboot-demo-docker .'
+            }
+        }
+        stage('Run from docker container') {
+            steps {
+                sh 'docker run -d -p 9090:9090 longade/springboot-demo-docker'
+            }
+        }
+    }
 }
