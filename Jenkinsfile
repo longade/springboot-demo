@@ -3,6 +3,7 @@ pipeline {
     tools {
         maven 'maven-3.6.3'
         jdk 'jdk-11'
+        docker 'default-docker'
     }
     stages {
         stage('Clone') {
