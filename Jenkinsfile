@@ -27,6 +27,11 @@ pipeline {
                 sh 'docker build -t longade/springboot-demo-docker .'
             }
         }
+        stage('Docker Remove old container') {
+            steps {
+                sh 'docker rm -f springboot-demo-docker'
+            }
+        }
         stage('Docker run') {
             steps {
                 sh 'docker run -d --name springboot-demo-docker -p 9090:9090 longade/springboot-demo-docker'
