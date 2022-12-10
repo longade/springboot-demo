@@ -9,7 +9,7 @@ pipeline {
         stage('Clone') {
             steps {
                 // Get some code from a GitHub repository
-                git branch: 'master', url: 'https://github.com/longade/springboot-demo.git'
+                git branch: 'dev', url: 'https://github.com/longade/springboot-demo.git'
             }
         }
         stage('Build') {
