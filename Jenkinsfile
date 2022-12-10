@@ -3,7 +3,6 @@ pipeline {
     tools {
         maven 'maven-3.6.3'
         jdk 'jdk-11'
-        docker 'default-docker'
     }
     stages {
         stage('Clone') {
@@ -30,7 +29,7 @@ pipeline {
         }
         stage('Run from docker container') {
             steps {
-                sh 'docker run -d -p 9090:9090 longade/springboot-demo-docker'
+                sh 'docker run -d -p 9090:9090 --name springboot-demo-docker longade/springboot-demo-docker'
             }
         }
     }
