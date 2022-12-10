@@ -9,7 +9,7 @@ FROM openjdk:11.0.11-jdk-slim
 WORKDIR /opt/springboot-demo-app
 COPY ./ /opt/springboot-demo-app
 RUN ls target
-COPY /opt/springboot-demo-app/target/*.jar /opt/springboot-demo-app/springboot-demo-app.jar
+COPY /opt/springboot-demo-app/target/spring-demo-0.0.1-SNAPSHOT.jar springboot-demo-app.jar
 ENV PORT 9090
 EXPOSE $PORT
-ENTRYPOINT ["java","-jar","-Xmx1024M","-Dserver.port=${PORT}","/opt/springboot-demo-app/springboot-demo-app.jar"]
+ENTRYPOINT ["java","-jar","-Xmx1024M","-Dserver.port=${PORT}","springboot-demo-app.jar"]
