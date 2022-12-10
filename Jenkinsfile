@@ -1,28 +1,24 @@
 pipeline {
     agent any
-    tools {
-        maven 'maven-3.6.3'
-        jdk 'jdk-11'
-    }
     stages {
-        stage('Clone') {
+        stage('Clone from GitHub') {
             steps {
                 // Get some code from a GitHub repository
                 git branch: 'dev', url: 'https://github.com/longade/springboot-demo.git'
             }
         }
-        stage('Run permission') {
+        stage('Exec permission to mvnw') {
             steps {
                 sh "chmod +x mvnw"
             }
         }
-        stage('Build') {
+        stage('Maven Build') {
             steps {
                 // Build the project using maven
                 sh "./mvnw clean install -DskipTests"
             }
         }
-        stage('Running unit tests') {
+        stage('Maven Running unit tests') {
             steps {
                 sh "./mvnw test -Punit"
             }
@@ -32,7 +28,7 @@ pipeline {
                 sh 'docker build -t longade/springboot-demo-docker .'
             }
         }
-        stage('Docker Remove old container') {
+        stage('Docker remove old container') {
             steps {
                 sh 'docker rm -f springboot-demo-docker'
             }
