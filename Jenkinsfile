@@ -35,7 +35,7 @@ pipeline {
         }
         stage('Docker run') {
             steps {
-                sh 'docker run -d --name springboot-demo-docker -p 9090:9090 longade/springboot-demo-docker'
+                sh 'docker run -d --name springboot-demo-docker -p 9090:9090 --network=mysql_default longade/springboot-demo-docker'
             }
         }
     }
