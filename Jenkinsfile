@@ -11,15 +11,20 @@ pipeline {
                 git branch: 'dev', url: 'https://github.com/longade/springboot-demo.git'
             }
         }
+        stage('Run permission') {
+            steps {
+                sh "chmod +x mvnw"
+            }
+        }
         stage('Build') {
             steps {
                 // Build the project using maven
-                sh "mvn clean install -DskipTests"
+                sh "./mvnw clean install -DskipTests"
             }
         }
         stage('Running unit tests') {
             steps {
-                sh "mvn test -Punit"
+                sh "./mvnw test -Punit"
             }
         }
         stage('Docker Build') {
