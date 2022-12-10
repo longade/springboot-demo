@@ -22,14 +22,14 @@ pipeline {
                 sh "mvn test -Punit"
             }
         }
-        stage('Deploy on container') {
+        stage('Docker Build') {
             steps {
                 sh 'docker build -t longade/springboot-demo-docker .'
             }
         }
-        stage('Run from docker container') {
+        stage('Docker run') {
             steps {
-                sh 'docker run -d -p 9090:9090 --name springboot-demo-docker longade/springboot-demo-docker'
+                sh 'docker run -d --name springboot-demo-docker -p 9090:9090 longade/springboot-demo-docker'
             }
         }
     }
